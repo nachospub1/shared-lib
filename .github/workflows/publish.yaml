@@ -32,11 +32,11 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Configurar .npmrc usando npm set
+      - name: Configurar .npmrc global
         run: |
-          npm set @nachospub1:registry https://npm.pkg.github.com/
-          npm set //npm.pkg.github.com/:_authToken=${{ env.NODE_AUTH_TOKEN }}
-          npm config list
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+          echo "@nachospub1:registry=https://npm.pkg.github.com/" >> ~/.npmrc
+          cat ~/.npmrc
 
       - name: Instalar dependencias
         run: pnpm install
@@ -45,6 +45,8 @@ jobs:
         run: pnpm build
 
       - name: Probar autenticación con `npm whoami`
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npm whoami
 
       - name: Publicar paquetes con tag según rama
