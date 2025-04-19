@@ -1,0 +1,55 @@
+trigger:
+  - dev
+  - qa
+  - main
+
+name: '$(Build.DefinitionName) $(Date:dd-MM-yyyy) rev$(Rev:r) in $(Build.SourceBranchName)'
+
+resources:
+  - repo: self
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  AZ_PROJECT: app
+  NODE_VERSION: '20.x'
+  AZ_BRANCH_NAME: $(Build.SourceBranchName)
+  ${{ if eq(variables['Build.SourceBranchName'], 'dev') }}:
+    AZ_REGION: eastus
+  ${{ elseif eq(variables['Build.SourceBranchName'], 'qa') }}:
+    AZ_REGION: eastus2
+  ${{ elseif eq(variables['Build.SourceBranchName'], 'main') }}:
+    AZ_REGION: eastus2
+
+stages:
+  - stage: BuildAndDeploy
+    jobs:
+      - job: Build
+        displayName: Build & Deploy
+        steps:
+          - task: UseNode@1
+            inputs:
+              version: '$(NODE_VERSION)'
+
+          - script: corepack enable
+            displayName: '✅ Enable corepack'
+
+          - script: pnpm --version || corepack prepare pnpm@9.0.0 --activate
+            displayName: '🔎 Ensure pnpm is ready'
+
+          - script: pnpm install --frozen-lockfile
+            displayName: '💾 Install dependencies'
+
+          - script: |
+              echo "Building TS library..."
+              pnpm run build
+            displayName: '🏗️ Build TS'
+
+          - task: Npm@1
+            displayName: '📤  Publish to NPM Registry'
+            inputs:
+              command: 'publish'
+              verbose: true
+              publishRegistry: 'useFeed'
+              publishFeed: c6535303-168b-4cfd-bce1-b4abf278528b/ 4715c609-3b68-469a-bc94-b6bd5a46a8ff

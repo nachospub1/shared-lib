@@ -1,0 +1,12 @@
+.turbo
+coverage
+node_modules
+src
+test
+__tests__
+.prettierrc
+.nvmrc
+.eslintignore
+tsconfig.json
+tsconfig.tsbuildinfo
+jest.config.js

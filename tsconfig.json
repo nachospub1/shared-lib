@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "target": "ES2021",
+    "baseUrl": "./",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "strictNullChecks": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "skipLibCheck": true,
+    "jsx": "react-jsx",
+    "moduleResolution": "node",
+    "composite": true,
+    "outDir": "dist",
+    "rootDir": "./",
+    "paths": {
+      "@/*": ["packages/*/src"]
+    }
+  },
+  "include": ["packages/**/*", "jest.config.base.js", "tsconfig.json", ".eslintrc.base.js"],
+  "exclude": ["node_modules", "dist"]
+}
