@@ -44,12 +44,6 @@ jobs:
       - name: Compilar subproyectos
         run: pnpm build
 
-      - name: Probar autenticación con `npm whoami`
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NPM_CONFIG_USERCONFIG: .npmrc
-        run: npm whoami
-
       - name: Publicar paquetes con tag según rama
         env:
           GITHUB_REF_NAME: ${{ github.ref_name }}
