@@ -28,23 +28,15 @@ jobs:
           node-version: 22
           registry-url: 'https://npm.pkg.github.com'
           scope: '@nachospub1'
+          always-auth: true
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Instalar dependencias
         run: pnpm install
 
       - name: Compilar subproyectos
         run: pnpm build
-
-      - name: Setup .npmrc for GitHub Packages
-        run: |
-          echo "@nachospub1:registry=https://npm.pkg.github.com/" >> ~/.npmrc
-          echo "//npm.pkg.github.com/:_authToken=${{ env.NPM_TOKEN }}" >> ~/.npmrc
-          echo "registry=https://npm.pkg.github.com/" >> ~/.npmrc
-          echo "always-auth=true" >> ~/.npmrc
-
-      - name: Validar token
-        run: |
-          echo "Token length: ${#NPM_TOKEN}"
 
       - name: Verificar quién soy
         run: pnpm whoami
