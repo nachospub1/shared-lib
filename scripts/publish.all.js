@@ -19,9 +19,14 @@ dirs.forEach((dir) => {
     const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'))
     if (!pkg.private) {
       console.log(`📦 Publicando ${pkg.name} con tag "${tag}"...`)
+      execSync(`npm config set //npm.pkg.github.com/:_authToken=${process.env.NODE_AUTH_TOKEN}`, {
+        cwd: pkgPath,
+        stdio: 'inherit',
+      })
       execSync(`npm publish --tag ${tag}`, {
         cwd: path.join(packagesDir, dir),
         stdio: 'inherit',
+        env: { ...process.env, NODE_AUTH_TOKEN: process.env.NPM_TOKEN },
       })
     } else {
       console.log(`🔒 ${pkg.name} está marcado como privado. Saltando...`)
