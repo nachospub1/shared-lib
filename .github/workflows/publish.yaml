@@ -36,14 +36,14 @@ jobs:
 
       - name: Publicar paquetes con tag según rama
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_REF_NAME: ${{ github.ref_name }}
         run: node scripts/publish.all.js
 
       - name: Actualizar dist-tags según la rama
         if: ${{ github.ref_name == 'qa' || github.ref_name == 'main' }}
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           # Obtener versión de los paquetes
           packages=$(pnpm ls -r --json | jq -r '.[] | select(.private == false) | .path + ":" + .name + ":" + (.version // "")')
