@@ -3,7 +3,11 @@ const fs = require('fs')
 const path = require('path')
 require('dotenv').config()
 
-const tag = process.env.TAG || 'latest'
+const branch = process.env.GITHUB_REF_NAME || process.env.BRANCH || 'main'
+let tag = process.env.TAG || 'latest'
+
+if (branch === 'dev') tag = 'dev'
+if (branch === 'qa') tag = 'test'
 
 const packagesDir = path.resolve('packages') // Ajusta si tus paquetes están en otra carpeta
 
