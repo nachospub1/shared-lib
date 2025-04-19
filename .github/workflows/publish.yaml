@@ -33,6 +33,11 @@ jobs:
       - name: Compilar subproyectos
         run: pnpm build
 
+      - name: Verificar si el token llega
+        run: 'echo "Token empieza con: ${NPM_TOKEN}'
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - name: Setup .npmrc for GitHub Packages
         run: |
           echo "@nachospub1:registry=https://npm.pkg.github.com/" >> ~/.npmrc
