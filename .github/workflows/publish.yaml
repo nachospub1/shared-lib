@@ -32,6 +32,12 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      - name: Configurar .npmrc usando npm set
+        run: |
+          npm set @nachospub1:registry https://npm.pkg.github.com/
+          npm set //npm.pkg.github.com/:_authToken=${{ secrets.NPM_TOKEN }}
+          npm config list
+
       - name: Instalar dependencias
         run: pnpm install
 
