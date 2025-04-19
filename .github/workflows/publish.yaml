@@ -34,7 +34,8 @@ jobs:
         run: pnpm build
 
       - name: Verificar si el token llega
-        run: 'echo "Token empieza con: ${NPM_TOKEN}'
+        run: |
+          echo "Token empieza con: ${NPM_TOKEN}"
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
