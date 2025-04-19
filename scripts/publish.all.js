@@ -20,7 +20,7 @@ dirs.forEach((dir) => {
     if (!pkg.private) {
       console.log(`📦 Publicando ${pkg.name} con tag "${tag}"...`)
       execSync(`pnpm config set //npm.pkg.github.com/:_authToken=${process.env.NODE_AUTH_TOKEN}`, {
-        cwd: pkgPath,
+        cwd: path.join(packagesDir, dir),
         stdio: 'inherit',
         env: { ...process.env, NODE_AUTH_TOKEN: process.env.NPM_TOKEN, NPM_CONFIG_USERCONFIG: path.join(__dirname, '..', '.npmrc') },
       })
