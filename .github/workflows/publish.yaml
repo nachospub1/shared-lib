@@ -38,8 +38,8 @@ jobs:
       - name: Compilar subproyectos
         run: pnpm build
 
-      - name: Verificar quién soy
-        run: pnpm whoami
+      - name: Probar autenticación con `npm ping`
+        run: npm ping
 
       - name: Publicar paquetes con tag según rama
         env:
