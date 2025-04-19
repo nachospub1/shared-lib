@@ -44,8 +44,8 @@ jobs:
       - name: Compilar subproyectos
         run: pnpm build
 
-      - name: Probar autenticación con `npm ping`
-        run: npm ping
+      - name: Probar autenticación con `npm whoami`
+        run: npm whoami
 
       - name: Publicar paquetes con tag según rama
         env:
