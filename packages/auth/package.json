@@ -1,0 +1,32 @@
+{
+  "name": "@nachospub1/auth",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "package.json",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc --outDir dist",
+    "lint": "eslint src --ext .ts",
+    "test": "jest"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "license": "ISC",
+  "author": "",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  }
+}
