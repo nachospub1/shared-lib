@@ -19,15 +19,19 @@ jobs:
 
       - uses: pnpm/action-setup@v2
         with:
-          version: 8
+          version: 10
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
-          registry-url: 'https://registry.npmjs.org/'
+          node-version: 22
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@nachospub1'
 
       - name: Instalar dependencias
         run: pnpm install
+
+      - name: Compilar subproyectos
+        run: pnpm build
 
       - name: Setup .npmrc for GitHub Packages
         run: |
