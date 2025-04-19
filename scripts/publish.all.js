@@ -19,14 +19,16 @@ dirs.forEach((dir) => {
     const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'))
     if (!pkg.private) {
       console.log(`📦 Publicando ${pkg.name} con tag "${tag}"...`)
-      execSync(`npm config set //npm.pkg.github.com/:_authToken=${process.env.NODE_AUTH_TOKEN}`, {
+      execSync(`pnpm config set //npm.pkg.github.com/:_authToken=${process.env.NODE_AUTH_TOKEN}`, {
         cwd: pkgPath,
         stdio: 'inherit',
+        env: { ...process.env, NODE_AUTH_TOKEN: process.env.NPM_TOKEN, NPM_CONFIG_USERCONFIG: path.join(__dirname, '..', '.npmrc') },
       })
-      execSync(`npm publish --tag ${tag}`, {
+      console.log('🧾 .npmrc actual:', fs.readFileSync(process.env.NPM_CONFIG_USERCONFIG, 'utf-8'))
+      execSync(`pnpm publish --tag ${tag}`, {
         cwd: path.join(packagesDir, dir),
         stdio: 'inherit',
-        env: { ...process.env, NODE_AUTH_TOKEN: process.env.NPM_TOKEN },
+        env: { ...process.env, NODE_AUTH_TOKEN: process.env.NPM_TOKEN, NPM_CONFIG_USERCONFIG: path.join(__dirname, '..', '.npmrc') },
       })
     } else {
       console.log(`🔒 ${pkg.name} está marcado como privado. Saltando...`)
