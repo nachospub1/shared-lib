@@ -19,7 +19,7 @@ dirs.forEach((dir) => {
     const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'))
     if (!pkg.private) {
       console.log(`📦 Publicando ${pkg.name} con tag "${tag}"...`)
-      execSync(`npm publish --access=public --tag ${tag}`, {
+      execSync(`npm publish --tag ${tag}`, {
         cwd: path.join(packagesDir, dir),
         stdio: 'inherit',
       })
