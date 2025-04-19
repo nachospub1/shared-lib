@@ -27,7 +27,7 @@ export abstract class BaseOAuthProvider {
    * @returns {Promise<string>} The authorization URL.
    * @memberof BaseOAuthProvider
    */
-  async getAuthorizationUrl(): Promise<string> {
+  async getAuthorizationUrl(provider: string): Promise<string> {
     throw new Error('Method not implemented.')
   }
 

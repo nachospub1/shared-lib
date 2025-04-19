@@ -1,6 +1,7 @@
 const { execSync } = require('child_process')
 const fs = require('fs')
 const path = require('path')
+require('dotenv').config()
 
 const rootDir = process.cwd()
 const workspacePackages = JSON.parse(execSync('pnpm ls -r --json', { encoding: 'utf-8' }))
