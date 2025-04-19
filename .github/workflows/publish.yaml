@@ -13,6 +13,8 @@ jobs:
     permissions:
       contents: read
       packages: write
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
     steps:
       - uses: actions/checkout@v4
@@ -33,27 +35,21 @@ jobs:
       - name: Compilar subproyectos
         run: pnpm build
 
-      - name: Verificar si el token llega
-        run: |
-          echo "Token empieza con: ${NPM_TOKEN}"
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
       - name: Setup .npmrc for GitHub Packages
         run: |
           echo "@nachospub1:registry=https://npm.pkg.github.com/" >> ~/.npmrc
-          echo "//npm.pkg.github.com/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
+          echo "//npm.pkg.github.com/:_authToken=${{ env.NPM_TOKEN }}" >> ~/.npmrc
+
+      - name: Mostrar .npmrc generado
+        run: cat ~/.npmrc
 
       - name: Publicar paquetes con tag según rama
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_REF_NAME: ${{ github.ref_name }}
         run: node scripts/publish.all.js
 
       - name: Actualizar dist-tags según la rama
         if: ${{ github.ref_name == 'qa' || github.ref_name == 'main' }}
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           # Obtener versión de los paquetes
           packages=$(pnpm ls -r --json | jq -r '.[] | select(.private == false) | .path + ":" + .name + ":" + (.version // "")')
