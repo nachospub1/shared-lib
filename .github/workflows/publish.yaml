@@ -29,6 +29,9 @@ jobs:
       - name: Instalar dependencias
         run: pnpm install
 
+      - name: Setup .npmrc for GitHub Packages
+        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
+
       - name: Publicar paquetes con tag según rama
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
