@@ -12,9 +12,9 @@
  *   scope: 'read write',
  *   state: 'your-state',
  * })
- * const authUrl = buildAuthUrl(baseUrl, parameters) 
+ * const authUrl = buildAuthUrl(baseUrl, parameters)
  */
-export const buildAuthUrl = (baseUrl: string, parameters: URLSearchParams): string => {
-    const url = `${baseUrl}?${parameters.toString()}`
-    return url
-  }
+export const buildOAuthUrl = (baseUrl: string, parameters: URLSearchParams): string => {
+  const url = `${baseUrl}?${parameters.toString()}`
+  return url
+}
