@@ -32,11 +32,11 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Configurar .npmrc global
+      - name: Configurar .npmrc personalizado
         run: |
-          echo "//npm.pkg.github.com/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
-          echo "@nachospub1:registry=https://npm.pkg.github.com/" >> ~/.npmrc
-          cat ~/.npmrc
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+          echo "@nachospub1:registry=https://npm.pkg.github.com/" >> .npmrc
+          cat .npmrc
 
       - name: Instalar dependencias
         run: pnpm install
