@@ -41,7 +41,7 @@ dirs.forEach((dir) => {
   console.log('🧾 .npmrc aplicado al paquete:', fs.readFileSync(subNpmrc, 'utf-8'))
 
   try {
-    execSync(`pnpm publish --tag ${tag}`, {
+    execSync(`pnpm publish --tag ${tag} --no-git-checks`, {
       cwd: subprojectPath,
       stdio: 'inherit',
       env: {
