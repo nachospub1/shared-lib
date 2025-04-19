@@ -1,6 +1,6 @@
-# @app-aramco/logger
+# @anachospub1/auth
 
-> Base abstractions for HTTP client: request executions with custom headers and payloads
+> Base abstractions, models and utils for Auth Provider
 
 ## 📦 Install the library locally
 

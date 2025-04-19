@@ -1,0 +1,56 @@
+name: Publish to npm
+
+on:
+  push:
+    branches:
+      - dev
+      - qa
+      - main
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: 'https://registry.npmjs.org/'
+
+      - name: Instalar dependencias
+        run: pnpm install
+
+      - name: Publicar paquetes con tag según rama
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_REF_NAME: ${{ github.ref_name }}
+        run: node scripts/publish-all.js
+
+      - name: Actualizar dist-tags según la rama
+        if: ${{ github.ref_name == 'qa' || github.ref_name == 'main' }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          # Obtener versión de los paquetes
+          packages=$(pnpm ls -r --json | jq -r '.[] | select(.private == false) | .path + ":" + .name + ":" + (.version // "")')
+
+          for entry in $packages; do
+            IFS=":" read -r path pkgName version <<< "$entry"
+
+            if [ "${{ github.ref_name }}" = "qa" ]; then
+              echo "🎯 $pkgName@$version: dev → test"
+              node scripts/tag-move.js "$pkgName" "$version" "dev" "test"
+            elif [ "${{ github.ref_name }}" = "main" ]; then
+              echo "🎯 $pkgName@$version: test → latest"
+              node scripts/tag-move.js "$pkgName" "$version" "test" "latest"
+            fi
+          done
