@@ -77,7 +77,7 @@ export class BaseHttpClient {
 
   /**
    * Executes a request of supported methods
-   * @param method Request method (GET | POST | PATCH | PUT | DELETE)
+   * @param method Request method (HEAD | GET | POST | PATCH | PUT | DELETE)
    * @param payload
    * @returns
    */
