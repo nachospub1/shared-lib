@@ -1,5 +1,6 @@
 import { type IProviderConfig, type IOAuthExecution } from '../interfaces'
-import { buildOAuthUrl, getOauthUrlParameters } from '../utils'
+import { buildOAuthUrl } from '../utils/build.oauth.url'
+import { getOauthUrlParameters } from '../utils/get.oauth.url.parameters'
 
 /**
  * Base class for OAuth providers
