@@ -1,6 +1,6 @@
 {
   "name": "@nachospub1/auth",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -22,12 +22,16 @@
     "lint": "eslint src --ext .ts",
     "test": "jest"
   },
-  "dependencies": {},
-  "devDependencies": {},
+  "dependencies": {
+    "jsonwebtoken": "^9.0.2"
+  },
   "license": "ISC",
   "author": "",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/",
     "access": "public"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.9"
   }
 }
