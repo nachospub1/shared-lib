@@ -4,7 +4,6 @@ import { BaseOAuthProvider } from '../models/base.oauth.provider'
 /**
  * Google OAuth provider
  * @extends BaseOAuthProvider
- * @classdesc This class is used to handle the OAuth flow for Google
  */
 export class GoogleOAuthProvider extends BaseOAuthProvider {
   exchangeCodeForToken(code: string): IOAuthExecution {
