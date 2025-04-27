@@ -21,8 +21,7 @@ export abstract class BaseOAuthProvider {
 
   /**
    * Get the authorization URL for the OAuth provider
-   * @param config - Configuration for the OAuth provider
-   * @returns
+   * @returns The authorization URL
    */
   getAuthUrl(): string {
     const { authorizeUrl, callbackUrl, clientId, scope } = this.config
